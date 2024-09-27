@@ -17,7 +17,7 @@ namespace gengine {
 	}
 	Vector2 Vector2::operator+(double value) const
 	{
-		return Vector2(x + value, x + value);
+		return Vector2(x + value, y + value);
 	}
 	Vector2 Vector2::operator-(const Vector2& other) const
 	{
