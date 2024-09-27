@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../src/classes/math/vector/Vector2.hpp"
+#include "../../src/classes/math/vector/Vector2.hpp"
 
 using namespace gengine;
 
