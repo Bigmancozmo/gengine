@@ -7,9 +7,14 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/classes/math/vector/*.cpp"
 )
 
+file(GLOB TESTS
+    "*.cc"
+    "math/*.cc"
+)
+
 add_executable(
   gengine_tests
-  vector_test.cc
+  ${TESTS}
   ${SOURCES}
 )
 target_link_libraries(
