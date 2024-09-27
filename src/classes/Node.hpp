@@ -15,6 +15,9 @@ namespace gengine {
             Node(double x, double y, double w, double h);
             Node(Vector2 pos);
             Node(Vector2 pos, Vector2 size);
+
+            Vector2 getPosition();
+            Vector2 getScale();
     };
 }
 
