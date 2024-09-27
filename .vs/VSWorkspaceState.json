@@ -1,0 +1,17 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "out\\build\\x64-Debug",
+      "out\\install\\x64-Debug"
+    ]
+  },
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\classes",
+    "\\src\\classes\\math",
+    "\\src\\classes\\math\\vector"
+  ],
+  "SelectedNode": "\\src\\classes\\Node.cpp",
+  "PreviewInSolutionExplorer": false
+}
