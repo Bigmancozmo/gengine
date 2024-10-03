@@ -5,6 +5,7 @@ set(CMAKE_CSS_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 
 file(GLOB SOURCES
     "${SOURCE_DIR}/*.cpp"
@@ -26,3 +27,4 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 add_subdirectory(tests)
+add_subdirectory(lib/glfw)
