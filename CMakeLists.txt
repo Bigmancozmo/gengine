@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.6)
 project(gengine)
 
 set(CMAKE_CSS_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 
 file(GLOB SOURCES
@@ -12,6 +13,8 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/classes/math/vector/*.cpp"
 )
 
+add_executable(gengine ${SOURCES})
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -20,8 +23,6 @@ FetchContent_Declare(
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
-
-add_executable(gengine ${SOURCES})
 
 enable_testing()
 add_subdirectory(tests)
