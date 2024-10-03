@@ -12,6 +12,7 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/classes/*.cpp"
     "${SOURCE_DIR}/classes/math/*.cpp"
     "${SOURCE_DIR}/classes/math/vector/*.cpp"
+    "${SOURCE_DIR}/internal/*.cpp"
 )
 
 add_executable(gengine ${SOURCES})
@@ -28,3 +29,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 add_subdirectory(tests)
 add_subdirectory(lib/glfw)
+
+target_link_libraries(gengine glfw)
+find_package(OpenGL REQUIRED)
+target_link_libraries(gengine OpenGL::GL)
