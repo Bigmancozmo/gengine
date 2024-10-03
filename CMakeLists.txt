@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.6)
 project(gengine)
 
 set(CMAKE_CSS_STANDARD 14)
