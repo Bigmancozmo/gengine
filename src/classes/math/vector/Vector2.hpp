@@ -7,8 +7,8 @@ namespace gengine {
     class Vector2 {
         public:
             double x, y;
-            Vector2::Vector2() : x(0), y(0) {}
-            Vector2::Vector2(double x, double y) : x(x), y(y) {}
+            Vector2() : x(0), y(0) {}
+            Vector2(double x, double y) : x(x), y(y) {}
 
             // Addition
             Vector2 operator+(const Vector2& other) const;
