@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.2)
 project(gengine)
 
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
