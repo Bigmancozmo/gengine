@@ -17,6 +17,10 @@ file(GLOB SOURCES
 
 add_executable(gengine ${SOURCES})
 
+target_link_libraries(gengine glfw)
+find_package(OpenGL REQUIRED)
+target_link_libraries(gengine OpenGL::GL)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -29,7 +33,3 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 add_subdirectory(tests)
 add_subdirectory(lib/glfw)
-
-target_link_libraries(gengine glfw)
-find_package(OpenGL REQUIRED)
-target_link_libraries(gengine OpenGL::GL)
