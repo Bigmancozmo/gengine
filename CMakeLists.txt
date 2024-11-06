@@ -15,7 +15,17 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/internal/*.cpp"
 )
 
+file(GLOB LIB_SOURCES
+    "${LIB_DIR}/glad/src/glad.c"
+)
+
 add_executable(gengine ${SOURCES})
+
+target_link_libraries(gengine glfw)
+find_package(OpenGL REQUIRED)
+target_link_libraries(gengine OpenGL::GL)
+
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include")
 
 include(FetchContent)
 FetchContent_Declare(
@@ -29,7 +39,3 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 add_subdirectory(tests)
 add_subdirectory(lib/glfw)
-
-target_link_libraries(gengine glfw)
-find_package(OpenGL REQUIRED)
-target_link_libraries(gengine OpenGL::GL)
