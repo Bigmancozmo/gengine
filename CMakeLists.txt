@@ -19,7 +19,7 @@ file(GLOB LIB_SOURCES
     "${LIB_DIR}/glad/src/glad.c"
 )
 
-add_executable(gengine ${SOURCES})
+add_executable(gengine ${SOURCES} ${LIB_SOURCES})
 
 target_link_libraries(gengine glfw)
 find_package(OpenGL REQUIRED)
