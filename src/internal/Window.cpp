@@ -1,5 +1,10 @@
 #include "Window.hpp"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
 namespace gengine {
 	void Window::createWinHelper(std::string title, int width, int height)
 	{
@@ -15,6 +20,8 @@ namespace gengine {
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		
+		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 		glViewport(0, 0, 800, 600);
 	}
 
