@@ -24,6 +24,8 @@ namespace gengine {
             Vector2 getPosition();
             Vector2 getScale();
 
+            GLFWwindow* get();
+
             ~Window();
     };
 }

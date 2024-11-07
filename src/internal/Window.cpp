@@ -58,6 +58,11 @@ namespace gengine {
 		return Vector2();
 	}
 
+	GLFWwindow* Window::get()
+	{
+		return window;
+	}
+
 	Window::~Window()
 	{
 		glfwDestroyWindow(window);

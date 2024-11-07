@@ -9,6 +9,7 @@ int main() {
 	Window* window = new Window("Test window", Vector2(1280, 720));
 	
 	while (!(window->shouldClose())) {
+		GLFWwindow* win = window->get();
 		window->update();
 	}
 
