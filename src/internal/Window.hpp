@@ -2,6 +2,7 @@
 #define WINDOW_HPP
 
 #include "../classes/math/vector/Vector2.hpp"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>

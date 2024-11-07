@@ -4,6 +4,7 @@ namespace gengine {
 	void Window::createWinHelper(std::string title, int width, int height)
 	{
 		glfwInit();
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
 		glfwDefaultWindowHints();
 
@@ -14,6 +15,7 @@ namespace gengine {
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		glViewport(0, 0, 800, 600);
 	}
 
 	Window::Window(std::string title)
