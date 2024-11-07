@@ -1,7 +1,6 @@
 #include <iostream>
-#include "classes/math/vector/Vector2.hpp"
-#include "classes/math/vector/Vector3.hpp"
-#include "internal/Window.hpp"
+#include "gengine.h"
+#include "gengine_internals.h"
 
 using namespace gengine;
 
