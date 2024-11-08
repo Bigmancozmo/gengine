@@ -19,8 +19,25 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\n\0";
 
-int main() {
+bool hasArgument(int argc, char* argv[], const std::string& longForm, const std::string& shortForm) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == longForm || arg == shortForm) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+int main(int argc, char* argv[]) {
 	Window* window = new Window("Test window", Vector2(1280, 720));
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    if (hasArgument(argc, argv, "--wireframe", "-wf")) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    glEnable(GL_MULTISAMPLE);
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
