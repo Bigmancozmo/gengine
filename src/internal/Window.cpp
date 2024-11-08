@@ -9,7 +9,6 @@ namespace gengine {
 	void Window::createWinHelper(std::string title, int width, int height)
 	{
 		glfwInit();
-		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
 		glfwDefaultWindowHints();
 
@@ -20,6 +19,7 @@ namespace gengine {
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 		glViewport(0, 0, 800, 600);
@@ -61,6 +61,12 @@ namespace gengine {
 	GLFWwindow* Window::get()
 	{
 		return window;
+	}
+
+	void Window::setBackgroundColor(Color col)
+	{
+		glClearColor(col.r, col.g, col.b, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	Window::~Window()

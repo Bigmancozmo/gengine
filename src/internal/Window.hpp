@@ -2,6 +2,7 @@
 #define WINDOW_HPP
 
 #include "../classes/math/vector/Vector2.hpp"
+#include "../classes/data/Color.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -25,6 +26,8 @@ namespace gengine {
             Vector2 getScale();
 
             GLFWwindow* get();
+
+            void setBackgroundColor(Color col);
 
             ~Window();
     };

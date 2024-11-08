@@ -13,9 +13,8 @@ namespace gengine {
 			float b;
 
 			Color(float r, float g, float b) : r(r), g(g), b(b) {}
+			Color(ColorRGB col);
 			ColorRGB toRGB();
-
-			static Color rgb(int r_, int g_, int b_);
 	};
 	class ColorRGB {
 		public:

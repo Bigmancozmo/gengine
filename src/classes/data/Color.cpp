@@ -1,8 +1,11 @@
 #include "Color.hpp"
 
 namespace gengine {
-	Color Color::rgb(int r_, int g_, int b_) {
-		return Color(r_ / 255, g_ / 255, b_ / 255);
+	Color::Color(ColorRGB col)
+	{
+		this->r = col.r / 255;
+		this->g = col.g / 255;
+		this->b = col.b / 255;
 	}
 	ColorRGB Color::toRGB() {
 		return ColorRGB(
