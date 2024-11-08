@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
+set(RESOURCES_SRC "${CMAKE_SOURCE_DIR}/src/resources")
+set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources")
 
 file(GLOB SOURCES
     "${SOURCE_DIR}/*.cpp"
@@ -27,6 +29,14 @@ find_package(OpenGL REQUIRED)
 target_link_libraries(gengine OpenGL::GL)
 
 target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include")
+
+add_custom_target(copy_resources ALL
+    COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST}  # Delete the existing resources directory
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_SRC} ${RESOURCES_DST}  # Copy fresh resources
+    COMMENT "Copying resources to build directory"
+)
+
+add_dependencies(gengine copy_resources)
 
 include(FetchContent)
 FetchContent_Declare(
