@@ -10,7 +10,7 @@ int main() {
 	while (!(window->shouldClose())) {
 		GLFWwindow* win = window->get();
 		ColorRGB col = ColorRGB(12, 27, 54);
-		window->setBackgroundColor(Color(col)); // TODO fix values other than 255/0 working
+		window->setBackgroundColor(Color(col));
 
 		window->update();
 	}
