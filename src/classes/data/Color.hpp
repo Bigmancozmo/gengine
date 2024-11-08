@@ -3,6 +3,9 @@
 
 #include "ColorRGB.hpp"
 
+#include <iostream>
+#include <cmath>
+
 namespace gengine {
 	class Color {
 		public:
