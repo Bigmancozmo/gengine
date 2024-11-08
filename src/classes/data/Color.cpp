@@ -1,5 +1,7 @@
 #include "Color.hpp"
 
 namespace gengine {
-	// Color::Color // TODO
+	Color Color::rgb(int r, int g, int b) {
+  return Color(r/255, g/255, b/255);
+ }
 }
