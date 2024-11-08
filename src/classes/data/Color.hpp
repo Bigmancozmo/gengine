@@ -23,7 +23,6 @@ namespace gengine {
 			int b;
 
 			ColorRGB(int r, int g, int b) : r(r), g(g), b(b) {}
-			Color toColor();
 	};
 };
 
