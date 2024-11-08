@@ -22,7 +22,7 @@ namespace gengine {
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-		glViewport(0, 0, 800, 600);
+		glViewport(0, 0, width, height);
 	}
 
 	Window::Window(std::string title)
