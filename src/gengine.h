@@ -8,4 +8,6 @@
 
 #include "classes/Node.hpp"
 
+#include "classes/Logger.hpp"
+
 #endif // GENGINE_H
