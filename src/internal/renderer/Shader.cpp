@@ -3,6 +3,9 @@
 namespace gengine {
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
+        logger = new Logger("Shader");
+        logger->log(INFO, "Started shader creation");
+
         std::string vertexCode, fragmentCode;
         std::ifstream vShaderFile, fShaderFile;
         vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -21,8 +24,11 @@ namespace gengine {
         }
         catch (std::ifstream::failure e)
         {
-            std::cout << "Failed to read shader files" << std::endl;
+            logger->log(ERROR, "Failed to load shader files");
+            return;
         }
+
+        logger->log(INFO, "Successfully loaded files");
 
         const char* vertexShaderSource = vertexCode.c_str();
         const char* fragmentShaderSource = fragmentCode.c_str();
@@ -37,7 +43,8 @@ namespace gengine {
         if (!success)
         {
             glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-            std::cout << "Vertex shader compilation failed:\n" << infoLog << std::endl;
+            logger->log(ERROR, "Failed to compile vertex shader: " + std::string(infoLog));
+            return;
         }
 
         unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -48,7 +55,8 @@ namespace gengine {
         if (!success)
         {
             glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-            std::cout << "Fragment shader compilation failed:\n" << infoLog << std::endl;
+            logger->log(ERROR, "Failed to compile fragment shader: " + std::string(infoLog));
+            return;
         }
 
         ID = glCreateProgram();
@@ -59,10 +67,12 @@ namespace gengine {
         glGetProgramiv(ID, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(ID, 512, NULL, infoLog);
-            std::cout << "Shader program linking failed:\n" << infoLog << std::endl;
+            logger->log(ERROR, "Failed to link shader program: " + std::string(infoLog));
+            return;
         }
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
+        logger->log(INFO, "Successfully created shader");
 	}
     void Shader::use()
     {

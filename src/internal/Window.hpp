@@ -3,6 +3,7 @@
 
 #include "../classes/math/vector/Vector2.hpp"
 #include "../classes/data/Color.hpp"
+#include "../classes/Logger.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -12,6 +13,7 @@ namespace gengine {
     class Window {
         private:
             GLFWwindow* window;
+            Logger* logger;
             void createWinHelper(std::string title, int width, int height);
     
         public:

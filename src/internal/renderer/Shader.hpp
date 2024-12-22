@@ -7,12 +7,14 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "../../classes/Logger.hpp"
 
 namespace gengine {
 	class Shader {
-		public:
+		private:
+			Logger* logger;
 			unsigned int ID;
-
+		public:
 			Shader(const char* vertexPath, const char* fragmentPath);
 			void use();
 			void setBool(std::string& name, bool value);

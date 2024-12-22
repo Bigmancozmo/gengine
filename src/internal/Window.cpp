@@ -8,7 +8,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 namespace gengine {
 	void Window::createWinHelper(std::string title, int width, int height)
 	{
-		glfwInit();
+		logger = new Logger("Window");
+		if(!glfwInit()) {
+			logger->log(ERROR, "GLFW failed to initialize");
+			return;
+		}
+		logger->log(INFO, "Initialized GLFW");
 
 		glfwDefaultWindowHints();
 
@@ -24,6 +29,7 @@ namespace gengine {
 		
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 		glViewport(0, 0, width, height);
+		logger->log(INFO, "Finished creating window");
 	}
 
 	Window::Window(std::string title)
