@@ -3,6 +3,9 @@
 
 #include "gengine.h"
 #include "gengine_internals.h"
+#include "internal/ProgramRunner.hpp"
+#define logERROR ERROR
+#include <windows.h>
 
 using namespace gengine;
 
@@ -16,11 +19,53 @@ bool hasArgument(int argc, char* argv[], const std::string& longForm, const std:
 	return false;
 }
 
+void deleteDirectory(const std::string& directory) {
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind = FindFirstFile((directory + "\\*").c_str(), &findFileData);
+
+	if (hFind == INVALID_HANDLE_VALUE) {
+		std::cerr << "Failed to find first file in directory: " << directory << std::endl;
+		return;
+	}
+
+	do {
+		const std::string fileOrDir = findFileData.cFileName;
+		if (fileOrDir != "." && fileOrDir != "..") {
+			const std::string fullPath = directory + "\\" + fileOrDir;
+			if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+				deleteDirectory(fullPath);
+			}
+			else {
+				if (!DeleteFile(fullPath.c_str())) {
+					std::cerr << "Failed to delete file: " << fullPath << std::endl;
+				}
+			}
+		}
+	} while (FindNextFile(hFind, &findFileData) != 0);
+
+	FindClose(hFind);
+
+	if (!RemoveDirectory(directory.c_str())) {
+		std::cerr << "Failed to remove directory: " << directory << std::endl;
+	}
+}
+
 
 int main(int argc, char* argv[]) {
 	Logger* logger = new Logger("Main");
 	Window* window = new Window("Test window", Vector2(1280, 720));
 	Shader* shader = new Shader("./resources/shaders/default/vertex.vert", "./resources/shaders/default/fragment.frag");
+	ProgramRunner* testRunner = new ProgramRunner("gShaderCompiler.exe");
+	int exitCode = testRunner->run();
+	
+	logger->log(INFO, "Finished gShaderCompiler with exit code " + std::to_string(exitCode));
+
+	if (CreateDirectory("temp", NULL) || ERROR_ALREADY_EXISTS == GetLastError()) {
+		logger->log(INFO, "Created 'temp' folder");
+	}
+	else {
+		logger->log(logERROR, "Failed to create 'temp' folder");
+	}
 
 	logger->log(INFO, "Loaded logger, window, and default shaders");
 
@@ -32,11 +77,11 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_MULTISAMPLE);
 
 	float vertices[] = {
-		 // Position         // Color
-		 0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
-		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
-		-0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f
+		// Position         // Color
+		0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+	   -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+	   -0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f
 	};
 	unsigned int indices[] = {
 		0, 1, 3,
@@ -78,6 +123,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	delete window;
+	deleteDirectory("temp");
 
 	return 1;
 }

@@ -32,8 +32,8 @@ target_link_libraries(gengine OpenGL::GL)
 target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include")
 
 add_custom_target(copy_resources ALL
-    COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST}  # Delete the existing resources directory
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_SRC} ${RESOURCES_DST}  # Copy fresh resources
+    COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_SRC} ${RESOURCES_DST} # Copy updated resources
     COMMENT "Copying resources to build directory"
 )
 
@@ -51,3 +51,4 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 add_subdirectory(tests)
 add_subdirectory(lib/glfw)
+add_subdirectory(executables/gShaderCompiler)

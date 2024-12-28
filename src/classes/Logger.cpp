@@ -24,6 +24,11 @@ void gengine::Logger::log(LogType type, std::string message)
     };
 }
 
+void gengine::Logger::log(int type, std::string message)
+{
+	log(static_cast<LogType>(type), message);
+}
+
 void gengine::Logger::log(std::string message)
 {
     log(DEFAULT, message);

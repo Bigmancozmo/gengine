@@ -18,6 +18,7 @@ namespace gengine {
 		public:
 			Logger(std::string loggerName);
 			void log(LogType type, std::string message);
+			void log(int type, std::string message);
 			void log(std::string message);
 	};
 }
