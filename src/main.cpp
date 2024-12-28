@@ -55,10 +55,6 @@ int main(int argc, char* argv[]) {
 	Logger* logger = new Logger("Main");
 	Window* window = new Window("Test window", Vector2(1280, 720));
 	Shader* shader = new Shader("./resources/shaders/default/vertex.vert", "./resources/shaders/default/fragment.frag");
-	ProgramRunner* testRunner = new ProgramRunner("gShaderCompiler.exe");
-	int exitCode = testRunner->run();
-	
-	logger->log(INFO, "Finished gShaderCompiler with exit code " + std::to_string(exitCode));
 
 	if (CreateDirectory("temp", NULL) || ERROR_ALREADY_EXISTS == GetLastError()) {
 		logger->log(INFO, "Created 'temp' folder");
