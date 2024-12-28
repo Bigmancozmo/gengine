@@ -1,19 +1,35 @@
 #include "Window.hpp"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
 namespace gengine {
 	void Window::createWinHelper(std::string title, int width, int height)
 	{
-		glfwInit();
+		logger = new Logger("Window");
+		if(!glfwInit()) {
+			logger->log(ERROR, "GLFW failed to initialize");
+			return;
+		}
+		logger->log(INFO, "Initialized GLFW");
 
 		glfwDefaultWindowHints();
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		
+		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		glViewport(0, 0, width, height);
+		logger->log(INFO, "Finished creating window");
 	}
 
 	Window::Window(std::string title)
@@ -47,6 +63,17 @@ namespace gengine {
 	Vector2 Window::getScale()
 	{
 		return Vector2();
+	}
+
+	GLFWwindow* Window::get()
+	{
+		return window;
+	}
+
+	void Window::setBackgroundColor(Color col)
+	{
+		glClearColor(col.r, col.g, col.b, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	Window::~Window()
