@@ -51,7 +51,7 @@ void deleteDirectory(const std::string& directory) {
 }
 
 
-int main(int argc, char* argv[]) {
+int notmain(int argc, char* argv[]) {
 	Logger* logger = new Logger("Main");
 	Window* window = new Window("Test window", Vector2(1280, 720));
 	Shader* shader = new Shader("./resources/shaders/default/vertex.vert", "./resources/shaders/default/fragment.frag");

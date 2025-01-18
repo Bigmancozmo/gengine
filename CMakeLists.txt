@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.8)
 project(gengine)
 
 set(CMAKE_CSS_STANDARD 14)
@@ -9,7 +9,21 @@ set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(RESOURCES_SRC "${CMAKE_SOURCE_DIR}/src/resources")
 set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources")
 
+# look for c# compiler
+find_program(CMAKE_CSharp_COMPILER
+    NAMES csc mcs
+    PATHS
+        "C:/Program Files/Microsoft Visual Studio/*/MSBuild/*/bin/Roslyn"
+        "C:/Windows/Microsoft.NET/Framework*/"
+        "/usr/bin"
+        "/usr/local/bin"
+    DOC "Path to the C# compiler"
+)
+
+enable_language(CSharp)
+
 file(GLOB SOURCES
+    "${SOURCE_DIR}/*.cs"
     "${SOURCE_DIR}/*.cpp"
     "${SOURCE_DIR}/classes/*.cpp"
     "${SOURCE_DIR}/classes/math/*.cpp"
