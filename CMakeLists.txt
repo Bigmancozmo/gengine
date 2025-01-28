@@ -20,10 +20,7 @@ find_program(CMAKE_CSharp_COMPILER
     DOC "Path to the C# compiler"
 )
 
-enable_language(CSharp)
-
 file(GLOB SOURCES
-    "${SOURCE_DIR}/*.cs"
     "${SOURCE_DIR}/*.cpp"
     "${SOURCE_DIR}/classes/*.cpp"
     "${SOURCE_DIR}/classes/math/*.cpp"
