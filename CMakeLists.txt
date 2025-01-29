@@ -26,6 +26,8 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/classes/math/*.cpp"
     "${SOURCE_DIR}/classes/math/vector/*.cpp"
     "${SOURCE_DIR}/classes/data/*.cpp"
+    "${SOURCE_DIR}/classes/file/*.cpp"
+    "${SOURCE_DIR}/classes/file/internal/*.cpp"
     "${SOURCE_DIR}/internal/*.cpp"
     "${SOURCE_DIR}/internal/renderer/*.cpp"
 )
