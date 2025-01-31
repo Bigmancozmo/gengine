@@ -9,7 +9,7 @@
 namespace gengine {
 	class Internet {
 		public:
-			static void Download(std::string url, std::string target);
+			static HRESULT Download(std::string url, std::string target);
 		};
 }
 
