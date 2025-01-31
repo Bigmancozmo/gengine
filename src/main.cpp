@@ -53,7 +53,7 @@ void deleteDirectory(const std::string& directory) {
 
 int main(int argc, char* argv[]) {
 	Logger* logger = new Logger("Main");
-	Window* window = new Window("Test window", Vector2(1280, 720));
+	Window* window = new Window("Test window", Vector2(800, 600));
 	Shader* shader = new Shader("./resources/shaders/default/vertex.vert", "./resources/shaders/default/fragment.frag");
 
 	if (CreateDirectory("temp", NULL) || ERROR_ALREADY_EXISTS == GetLastError()) {
