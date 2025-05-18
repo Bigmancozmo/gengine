@@ -63,6 +63,10 @@ namespace gengine {
             /// @param col The Color to set the background to
             void setBackgroundColor(Color col);
 
+            /// @brief Set the background color of the window
+            /// @param col The ColorRGB to set the background to
+            void setBackgroundColor(ColorRGB col);
+
             /// @brief Destroy and clean up the window
             ~Window();
     };
