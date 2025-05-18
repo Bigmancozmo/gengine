@@ -7,18 +7,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(RESOURCES_SRC "${CMAKE_SOURCE_DIR}/src/resources")
-set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources")
+set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources/")
 
-# look for c# compiler
-find_program(CMAKE_CSharp_COMPILER
-    NAMES csc mcs
-    PATHS
-        "C:/Program Files/Microsoft Visual Studio/*/MSBuild/*/bin/Roslyn"
-        "C:/Windows/Microsoft.NET/Framework*/"
-        "/usr/bin"
-        "/usr/local/bin"
-    DOC "Path to the C# compiler"
-)
+message("HELLO!")
+message("HELLO!")
+message("${CMAKE_BUILD_TYPE}")
+message(STATUS "Current Build Configuration: ${CONFIG}")
+message(STATUS "Available Configurations: ${CMAKE_CONFIGURATION_TYPES}")
+message("end...")
+IF(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    message("RelWithDebInfo, good job!")
+ELSE()
+    message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
+ENDIF()
 
 file(GLOB SOURCES
     "${SOURCE_DIR}/*.cpp"
@@ -42,7 +43,7 @@ target_link_libraries(gengine glfw)
 find_package(OpenGL REQUIRED)
 target_link_libraries(gengine OpenGL::GL)
 
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include")
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm/glm")
 
 add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory
