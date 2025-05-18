@@ -15,10 +15,10 @@ message("${CMAKE_BUILD_TYPE}")
 message(STATUS "Current Build Configuration: ${CONFIG}")
 message(STATUS "Available Configurations: ${CMAKE_CONFIGURATION_TYPES}")
 message("end...")
-IF(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-    message("RelWithDebInfo, good job!")
+IF((CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo") OR (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    message("Correct build type found")
 ELSE()
-    message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
+    message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo or Release!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
 ENDIF()
 
 file(GLOB SOURCES
