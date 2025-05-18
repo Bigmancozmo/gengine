@@ -3,7 +3,6 @@
 
 #include "gengine.h"
 #include "gengine_internals.h"
-#include "internal/ProgramRunner.hpp"
 
 using namespace gengine;
 
