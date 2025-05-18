@@ -6,11 +6,13 @@ set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 file(GLOB SOURCES
     "${SOURCE_DIR}/classes/math/*.cpp"
     "${SOURCE_DIR}/classes/math/vector/*.cpp"
+    "${SOURCE_DIR}/classes/data/*.cpp"
 )
 
 file(GLOB TESTS
     "*.cc"
     "math/*.cc"
+    "data/*.cc"
 )
 
 add_executable(

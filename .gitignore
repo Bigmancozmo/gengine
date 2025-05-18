@@ -1,2 +1,7 @@
 build
 .vs
+x64dbg
+
+# doxygen
+docs/html
+docs/latex
