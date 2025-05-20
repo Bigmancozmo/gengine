@@ -10,8 +10,13 @@ namespace gengine {
 	/// @brief Floating point RGB color
 	class Color {
 		public:
+			/// @brief Red value
 			float r;
+
+			/// @brief Green value
 			float g;
+
+			/// @brief Blue value
 			float b;
 
 			/// @brief Constructor from 3 floats
@@ -32,8 +37,13 @@ namespace gengine {
 	/// @brief An integer RGB color.
 	class ColorRGB {
 		public:
+			/// @brief Red value
 			int r;
+
+			/// @brief Green value
 			int g;
+
+			/// @brief Blue value
 			int b;
 
 			/// @brief Constructor from 3 integers
