@@ -13,8 +13,8 @@ namespace gengine {
 	class Shader {
 		private:
 			Logger* logger;
-			unsigned int ID;
 		public:
+			unsigned int ID;
 			Shader(const char* vertexPath, const char* fragmentPath);
 			void use();
 			void setBool(std::string& name, bool value);
