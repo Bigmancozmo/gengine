@@ -3,6 +3,8 @@
 namespace gengine {
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
+        this->ID = 0;
+
         logger = new Logger("Shader");
         logger->log(INFO, "Started shader creation");
 
@@ -59,7 +61,7 @@ namespace gengine {
             return;
         }
 
-        ID = glCreateProgram();
+        this->ID = glCreateProgram();
         glAttachShader(ID, vertexShader);
         glAttachShader(ID, fragmentShader);
         glLinkProgram(ID);
