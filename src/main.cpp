@@ -1,6 +1,10 @@
 #include <iostream>
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "gengine.h"
 #include "gengine_internals.h"
 
@@ -65,6 +69,13 @@ int main(int argc, char* argv[]) {
 		GLFWwindow* win = window->get();
 		ColorRGB col = ColorRGB(12, 27, 54);
 		window->setBackgroundColor(Color(col));
+
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::translate(trans, glm::vec3(0.0f, 0.0f, 0.0f));
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
 		shader->use();
 		glBindVertexArray(VAO);
