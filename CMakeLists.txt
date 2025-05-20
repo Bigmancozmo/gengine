@@ -43,7 +43,7 @@ target_link_libraries(gengine glfw)
 find_package(OpenGL REQUIRED)
 target_link_libraries(gengine OpenGL::GL)
 
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm/glm")
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm")
 
 add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory
