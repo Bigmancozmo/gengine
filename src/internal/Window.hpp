@@ -4,7 +4,6 @@
 #include "../classes/math/vector/Vector2.hpp"
 #include "../classes/data/Color.hpp"
 #include "../classes/Logger.hpp"
-#include "../dll.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -12,7 +11,7 @@
 
 namespace gengine {
     /// @brief Simple wrapper for GLFWwindow
-    class GENGINE_API Window {
+    class Window {
         private:
             /// @brief The class's GLFWwindow*
             GLFWwindow* window;
@@ -70,9 +69,18 @@ namespace gengine {
 
             /// @brief Destroy and clean up the window
             ~Window();
+
+        private:
+            int vertexLengthCounter = 0;
+            int vertexAttribCounter = 0;
         public:
             void polygonMode(GLenum face, GLenum mode) { glPolygonMode(face, mode); };
             void enable(GLenum cap) { glEnable(cap); };
+            void addVertexAttrib(GLint length, int totalSize);
+            void bufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage) { glBufferData(target, size, data, usage); };
+            void bindBuffer(GLenum target, GLuint buffer) { glBindBuffer(target, buffer); };
+            void bindVertexArray(GLuint array) { glBindVertexArray(array); };
+            void drawElements(GLenum type, GLsizei count) { glDrawElements(type, count, GL_UNSIGNED_INT, 0); };
     };
 }
 

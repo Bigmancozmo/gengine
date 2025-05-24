@@ -49,18 +49,16 @@ int main(int argc, char* argv[]) {
 	EBO* ebo = new EBO();
 	
 	ebo->bind();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	window->bufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	vbo->bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	window->bufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	window->addVertexAttrib(3, 6);
+	window->addVertexAttrib(3, 6);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	window->bindBuffer(GL_ARRAY_BUFFER, 0);
+	window->bindVertexArray(0);
 
 	logger->log(INFO, "Starting main loop");
 	while (!(window->shouldClose())) {
@@ -85,11 +83,11 @@ int main(int argc, char* argv[]) {
 		shader->setMat4(std::string("model"), model);
 		shader->setMat4(std::string("view"), view);
 		shader->setMat4(std::string("projection"), projection);
-		shader->use();
 
+		shader->use();
 		vao->bind();
 		ebo->bind();
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		window->drawElements(GL_TRIANGLES, 3);
 
 		window->update();
 	}

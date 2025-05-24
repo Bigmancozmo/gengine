@@ -1,11 +1,10 @@
 #ifndef VAO_HPP
 #define VAO_HPP
 
-#include "../../dll.h"
 #include "glad/glad.h"
 
 namespace gengine {
-	class GENGINE_API VAO {
+	class VAO {
 		private:
 			unsigned int ID;
 		public:

@@ -9,10 +9,9 @@
 #include <sstream>
 #include <iostream>
 #include "../../classes/Logger.hpp"
-#include "../../dll.h"
 
 namespace gengine {
-	class GENGINE_API Shader {
+	class Shader {
 		private:
 			Logger* logger;
 		public:

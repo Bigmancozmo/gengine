@@ -1,5 +1,6 @@
 #include "Window.hpp"
 #include "Window.hpp"
+#include "Window.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -102,5 +103,13 @@ namespace gengine {
 	Window::~Window()
 	{
 		glfwDestroyWindow(window);
+	}
+
+	void Window::addVertexAttrib(GLint length, int totalSize)
+	{
+		glVertexAttribPointer(vertexAttribCounter, length, GL_FLOAT, GL_FALSE, (totalSize * sizeof(float)), (void*)(vertexLengthCounter * sizeof(float)));
+		glEnableVertexAttribArray(vertexAttribCounter);
+		vertexLengthCounter += length;
+		vertexAttribCounter += 1;
 	}
 }

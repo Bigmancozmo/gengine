@@ -15,26 +15,19 @@ ELSE()
     message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo or Release!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
 ENDIF()
 
-file(GLOB SOURCES "${SOURCE_DIR}/*.cpp")
-
-file(GLOB_RECURSE CLASS_SOURCES "${SOURCE_DIR}/classes/*.cpp")
-file(GLOB_RECURSE INTERNAL_SOURCES "${SOURCE_DIR}/internal/*.cpp")
+file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 
 file(GLOB LIB_SOURCES
     "${LIB_DIR}/glad/src/glad.c"
 )
 
 add_executable(gengine ${SOURCES} ${LIB_SOURCES})
-add_library(classes SHARED ${CLASS_SOURCES} ${INTERNAL_SOURCES} ${LIB_SOURCES})
 
 target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm")
-target_include_directories(classes PUBLIC "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${SOURCE_DIR}")
-target_compile_definitions(classes PRIVATE BUILDING_GENGINE_DLL)
 
 find_package(OpenGL REQUIRED)
 
-target_link_libraries(classes PRIVATE glfw OpenGL::GL)
-target_link_libraries(gengine PRIVATE classes glfw OpenGL::GL)
+target_link_libraries(gengine PRIVATE glfw OpenGL::GL)
 
 add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory

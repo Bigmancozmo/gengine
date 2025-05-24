@@ -3,13 +3,12 @@
 
 #include <iostream>
 #include <cmath>
-#include "../../dll.h"
 
 namespace gengine {
-	class GENGINE_API ColorRGB;
+	class ColorRGB;
 
 	/// @brief Floating point RGB color
-	class GENGINE_API Color {
+	class Color {
 		public:
 			/// @brief Red value
 			float r;
@@ -36,7 +35,7 @@ namespace gengine {
 	};
 
 	/// @brief An integer RGB color.
-	class GENGINE_API ColorRGB {
+	class ColorRGB {
 		public:
 			/// @brief Red value
 			int r;
