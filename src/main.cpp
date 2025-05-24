@@ -27,12 +27,12 @@ int main(int argc, char* argv[]) {
 
 	logger->log(INFO, "Loaded logger, window, and default shaders");
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	window->polygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (hasArgument(argc, argv, "--wireframe", "-wf")) {
 		logger->log(INFO, "Launching with wireframe mode");
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		window->polygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	glEnable(GL_MULTISAMPLE);
+	window->enable(GL_MULTISAMPLE);
 
 	float vertices[] = {
 		// Position         // Color
@@ -44,16 +44,14 @@ int main(int argc, char* argv[]) {
 		0, 1, 2
 	};
 
-	unsigned int VBO, VAO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(VAO);
-	glGenBuffers(1, &EBO);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	VAO* vao = new VAO();
+	VBO* vbo = new VBO();
+	EBO* ebo = new EBO();
+	
+	ebo->bind();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	vbo->bind();
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
@@ -89,14 +87,16 @@ int main(int argc, char* argv[]) {
 		shader->setMat4(std::string("projection"), projection);
 		shader->use();
 
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		vao->bind();
+		ebo->bind();
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
 		window->update();
 	}
 
 	delete window;
+	delete shader;
+	delete logger;
 
 	return 1;
 }
