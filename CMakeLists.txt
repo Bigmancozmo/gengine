@@ -9,41 +9,32 @@ set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(RESOURCES_SRC "${CMAKE_SOURCE_DIR}/src/resources")
 set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources/")
 
-message("HELLO!")
-message("HELLO!")
-message("${CMAKE_BUILD_TYPE}")
-message(STATUS "Current Build Configuration: ${CONFIG}")
-message(STATUS "Available Configurations: ${CMAKE_CONFIGURATION_TYPES}")
-message("end...")
 IF((CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo") OR (CMAKE_BUILD_TYPE STREQUAL "Release"))
     message("Correct build type found")
 ELSE()
     message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo or Release!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
 ENDIF()
 
-file(GLOB SOURCES
-    "${SOURCE_DIR}/*.cpp"
-    "${SOURCE_DIR}/classes/*.cpp"
-    "${SOURCE_DIR}/classes/math/*.cpp"
-    "${SOURCE_DIR}/classes/math/vector/*.cpp"
-    "${SOURCE_DIR}/classes/data/*.cpp"
-    "${SOURCE_DIR}/classes/file/*.cpp"
-    "${SOURCE_DIR}/classes/file/internal/*.cpp"
-    "${SOURCE_DIR}/internal/*.cpp"
-    "${SOURCE_DIR}/internal/renderer/*.cpp"
-)
+file(GLOB SOURCES "${SOURCE_DIR}/*.cpp")
+
+file(GLOB_RECURSE CLASS_SOURCES "${SOURCE_DIR}/classes/*.cpp")
+file(GLOB_RECURSE INTERNAL_SOURCES "${SOURCE_DIR}/internal/*.cpp")
 
 file(GLOB LIB_SOURCES
     "${LIB_DIR}/glad/src/glad.c"
 )
 
 add_executable(gengine ${SOURCES} ${LIB_SOURCES})
-
-target_link_libraries(gengine glfw)
-find_package(OpenGL REQUIRED)
-target_link_libraries(gengine OpenGL::GL)
+add_library(classes SHARED ${CLASS_SOURCES} ${INTERNAL_SOURCES} ${LIB_SOURCES})
 
 target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm")
+target_include_directories(classes PUBLIC "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${SOURCE_DIR}")
+target_compile_definitions(classes PRIVATE BUILDING_GENGINE_DLL)
+
+find_package(OpenGL REQUIRED)
+
+target_link_libraries(classes PRIVATE glfw OpenGL::GL)
+target_link_libraries(gengine PRIVATE classes glfw OpenGL::GL)
 
 add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory

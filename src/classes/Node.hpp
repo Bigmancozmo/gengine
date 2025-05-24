@@ -2,9 +2,10 @@
 #define NODE_HPP
 
 #include "math/vector/Vector2.hpp"
+#include "../dll.h"
 
 namespace gengine {
-    class Node {
+    class GENGINE_API Node {
         private:
             float x, y;
             float w, h;

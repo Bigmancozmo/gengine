@@ -3,16 +3,17 @@
 
 #include <string>
 #include <iostream>
+#include "../dll.h"
 
 namespace gengine {
-	enum LogType {
+	enum GENGINE_API LogType {
 		DEFAULT,
 		INFO,
 		WARN,
 		ERROR
 	};
 
-	class Logger {
+	class GENGINE_API Logger {
 		private:
 			std::string loggerName;
 		public:
