@@ -1,4 +1,5 @@
 #include "Window.hpp"
+#include "Window.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -23,9 +24,24 @@ namespace gengine {
 		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+		if (!window) {
+			logger->log(ERROR, "Failed to create GLFW window");
+			glfwTerminate();
+			return;
+		}
+		glfwMakeContextCurrent(window);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+			logger->log(ERROR, "Failed to initialize GLAD");
+			return;
+		}
+
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
-		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+			logger->log(ERROR, "Failed to initialize GLAD");
+			return;
+		}
 		
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 		glViewport(0, 0, width, height);
@@ -86,6 +102,5 @@ namespace gengine {
 	Window::~Window()
 	{
 		glfwDestroyWindow(window);
-		glfwTerminate();
 	}
 }
