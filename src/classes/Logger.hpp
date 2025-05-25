@@ -9,7 +9,8 @@ namespace gengine {
 		DEFAULT,
 		INFO,
 		WARN,
-		ERROR
+		ERROR,
+		SUCCESS
 	};
 
 	class Logger {
