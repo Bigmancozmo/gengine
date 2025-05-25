@@ -8,6 +8,9 @@
 #include "gengine.h"
 #include "gengine_internals.h"
 
+#include <thread>
+#include <chrono>
+
 using namespace gengine;
 
 bool hasArgument(int argc, char* argv[], const std::string& longForm, const std::string& shortForm) {
@@ -25,6 +28,9 @@ int main(int argc, char* argv[]) {
 	Window* window = new Window("Test window", Vector2(800, 600));
 	Shader* shader = new Shader("./resources/shaders/default/vertex.vert", "./resources/shaders/default/fragment.frag");
 
+	bool logFPS = false;
+	bool useVSync = true;
+
 	logger->log(INFO, "Loaded logger, window, and default shaders");
 
 	window->polygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -32,16 +38,26 @@ int main(int argc, char* argv[]) {
 		logger->log(INFO, "Launching with wireframe mode");
 		window->polygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
+	if (hasArgument(argc, argv, "--no-vsync", "-novs")) {
+		logger->log(INFO, "Launching without VSync");
+		useVSync = false;
+	}
+	if (hasArgument(argc, argv, "--log-fps", "-fps")) {
+		logger->log(INFO, "Launching with FPS logging");
+		logFPS = true;
+	}
 	window->enable(GL_MULTISAMPLE);
 
 	float vertices[] = {
 		// Position         // Color
 		-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
 		 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
-		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
 	};
 	unsigned int indices[] = {
-		0, 1, 2
+		0, 1, 2,
+		0, 2, 3
 	};
 
 	VAO* vao = new VAO();
@@ -61,7 +77,19 @@ int main(int argc, char* argv[]) {
 	window->bindVertexArray(0);
 
 	logger->log(INFO, "Starting main loop");
+	
+	float lastFPStime = (float)glfwGetTime();
+	float fps = 0;
+
 	while (!(window->shouldClose())) {
+		if (((float)glfwGetTime() - lastFPStime) >= 1) {
+			if (logFPS) {
+				std::cout << fps << " FPS" << std::endl;
+			}
+			fps = 0;
+			lastFPStime = (float)glfwGetTime();
+		}
+
 		GLFWwindow* win = window->get();
 		ColorRGB col = ColorRGB(12, 27, 54);
 		window->setBackgroundColor(Color(col));
@@ -87,9 +115,15 @@ int main(int argc, char* argv[]) {
 		shader->use();
 		vao->bind();
 		ebo->bind();
-		window->drawElements(GL_TRIANGLES, 3);
+		window->drawElements(GL_TRIANGLES, 6);
 
 		window->update();
+
+		if (useVSync) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+
+		fps += 1;
 	}
 
 	delete window;
