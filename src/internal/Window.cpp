@@ -91,14 +91,14 @@ namespace gengine {
 	void Window::setBackgroundColor(Color col)
 	{
 		glClearColor(col.r, col.g, col.b, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	void Window::setBackgroundColor(ColorRGB col)
 	{
 		Color converted = col.toColor();
 		glClearColor(col.r, col.g, col.b, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	Window::~Window()

@@ -10,10 +10,6 @@
 
 #include <thread>
 #include <chrono>
-#include <windows.h>
-#include <vector>
-
-#include "plugins/PluginLoader.hpp"
 
 using namespace gengine;
 
@@ -25,28 +21,6 @@ bool hasArgument(int argc, char* argv[], const std::string& longForm, const std:
 		}
 	}
 	return false;
-}
-
-std::vector<std::string> getDllFiles(const std::string& folder)
-{
-	std::vector<std::string> dllFiles;
-	std::string searchPath = folder + "/*.dll";
-
-	WIN32_FIND_DATAA findData;
-	HANDLE hFind = FindFirstFileA(searchPath.c_str(), &findData);
-
-	if (hFind == INVALID_HANDLE_VALUE) {
-		return dllFiles;
-	}
-
-	do {
-		if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-			dllFiles.push_back(folder + "\\" + findData.cFileName);
-		}
-	} while (FindNextFileA(hFind, &findData));
-
-	FindClose(hFind);
-	return dllFiles;
 }
 
 int main(int argc, char* argv[]) {
@@ -72,16 +46,14 @@ int main(int argc, char* argv[]) {
 		logger->log(INFO, "Launching with FPS logging");
 		logFPS = true;
 	}
-
 	window->enable(GL_MULTISAMPLE);
-	window->enable(GL_DEPTH_TEST);
 
 	float vertices[] = {
 		// Position         // Color
-		-0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.2f,  0.0f, 0.0f, 1.0f,
-		-0.5f,  0.5f,  0.1f,  1.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
 	};
 	unsigned int indices[] = {
 		0, 1, 2,
@@ -108,22 +80,6 @@ int main(int argc, char* argv[]) {
 	
 	float lastFPStime = (float)glfwGetTime();
 	float fps = 0;
-
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-
-	auto dlls = getDllFiles("plugins");
-
-	if (dlls.size() == 0) {
-		logger->log(WARN, "No plugin DLLs were found.");
-	}
-
-	std::vector<PluginHandle> loadedPlugins;
-	for (const auto& dll : dlls) {
-		PluginHandle handle = PluginLoader::loadPlugin(dll.c_str());
-		loadedPlugins.push_back(handle);
-	}
 
 	while (!(window->shouldClose())) {
 		if (((float)glfwGetTime() - lastFPStime) >= 1) {
@@ -168,16 +124,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		fps += 1;
-
-		for (auto& handle : loadedPlugins) {
-			handle.plugin->update();
-		}
 	}
-
-	for (auto& handle : loadedPlugins) {
-		PluginLoader::unloadPlugin(handle);
-	}
-	loadedPlugins.clear();
 
 	delete window;
 	delete shader;

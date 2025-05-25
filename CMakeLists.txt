@@ -10,31 +10,29 @@ set(RESOURCES_SRC "${CMAKE_SOURCE_DIR}/src/resources")
 set(RESOURCES_DST "${CMAKE_BINARY_DIR}/resources/")
 
 IF((CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo") OR (CMAKE_BUILD_TYPE STREQUAL "Release"))
-	message("Correct build type found")
+    message("Correct build type found")
 ELSE()
-	message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo or Release!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
+    message(FATAL_ERROR "Make sure you're running with your build type set to RelWithDebInfo or Release!\n(CMAKE_BUILD_TYPE was ${CMAKE_BUILD_TYPE})")
 ENDIF()
 
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 
 file(GLOB LIB_SOURCES
-	"${LIB_DIR}/glad/src/glad.c"
+    "${LIB_DIR}/glad/src/glad.c"
 )
 
-add_subdirectory(plugins)
+add_executable(gengine ${SOURCES} ${LIB_SOURCES})
 
-add_executable(gengine ${SOURCES} ${LIB_SOURCES} "${CMAKE_SOURCE_DIR}/plugins/PluginLoader.cpp")
-
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}")
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm")
 
 find_package(OpenGL REQUIRED)
 
 target_link_libraries(gengine PRIVATE glfw OpenGL::GL)
 
 add_custom_target(copy_resources ALL
-	COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_SRC} ${RESOURCES_DST} # Copy updated resources
-	COMMENT "Copying resources to build directory"
+    COMMAND ${CMAKE_COMMAND} -E rm -rf ${RESOURCES_DST} # Delete the existing resources directory
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${RESOURCES_SRC} ${RESOURCES_DST} # Copy updated resources
+    COMMENT "Copying resources to build directory"
 )
 
 add_dependencies(gengine copy_resources)
