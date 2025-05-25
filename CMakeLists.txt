@@ -21,9 +21,11 @@ file(GLOB LIB_SOURCES
     "${LIB_DIR}/glad/src/glad.c"
 )
 
-add_executable(gengine ${SOURCES} ${LIB_SOURCES})
+add_subdirectory(plugins)
 
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm")
+add_executable(gengine ${SOURCES} ${LIB_SOURCES} "${CMAKE_SOURCE_DIR}/plugins/PluginLoader.cpp")
+
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}")
 
 find_package(OpenGL REQUIRED)
 
