@@ -78,15 +78,20 @@ int main(int argc, char* argv[]) {
 	window->enable(GL_DEPTH_TEST);
 
 	float vertices[] = {
-		// Position         // Color
-		-0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.2f,  0.0f, 0.0f, 1.0f,
-		-0.5f,  0.5f,  0.1f,  1.0f, 0.0f, 0.0f,
+		// Position          // Color
+		-0.5f, -0.5f, 0.5f,  1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, 0.5f,  0.0f, 1.0f, 0.0f,
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
 	};
 	unsigned int indices[] = {
 		0, 1, 2,
-		0, 2, 3
+		3, 0, 2,
+		3, 4, 2,
+		4, 1, 2,
+		0, 1, 3,
+		4, 1, 3
 	};
 
 	VAO* vao = new VAO();
@@ -160,7 +165,7 @@ int main(int argc, char* argv[]) {
 		shader->use();
 		vao->bind();
 		ebo->bind();
-		window->drawElements(GL_TRIANGLES, 6);
+		window->drawElements(GL_TRIANGLES, 18);
 
 		window->update();
 
