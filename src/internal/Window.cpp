@@ -38,6 +38,7 @@ namespace gengine {
 
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 			logger->log(ERROR, "Failed to initialize GLAD");
