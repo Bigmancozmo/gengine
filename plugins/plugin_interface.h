@@ -17,8 +17,8 @@ protected:
 
 public:
     virtual void set_logger(Logger* l) { logger = l; }
-    virtual void run() = 0;
-    virtual void update() = 0;
+    virtual void run() { logger->log(SUCCESS, "Plugin loaded successfully"); };
+    virtual void update() {};
     virtual ~IPlugin() {}
 };
 
