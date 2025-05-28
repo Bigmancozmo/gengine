@@ -21,11 +21,15 @@ file(GLOB LIB_SOURCES
     "${LIB_DIR}/glad/src/glad.c"
 )
 
+set(IMGUI_BACKENDS
+    "${LIB_DIR}/imgui/backends/imgui_impl_opengl3.cpp"
+)
+
 add_subdirectory(plugins)
 
 add_executable(gengine ${SOURCES} ${LIB_SOURCES} "${CMAKE_SOURCE_DIR}/plugins/PluginLoader.cpp")
 
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}")
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}" ${IMGUI_BACKENDS})
 
 find_package(OpenGL REQUIRED)
 
