@@ -27,9 +27,9 @@ set(IMGUI_BACKENDS
 
 add_subdirectory(plugins)
 
-add_executable(gengine ${SOURCES} ${LIB_SOURCES} "${CMAKE_SOURCE_DIR}/plugins/PluginLoader.cpp")
+add_executable(gengine ${SOURCES} ${LIB_SOURCES} "${CMAKE_SOURCE_DIR}/plugins/PluginLoader.cpp" ${IMGUI_BACKENDS})
 
-target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}" ${IMGUI_BACKENDS})
+target_include_directories(gengine PRIVATE "${LIB_DIR}/glad/include" "${LIB_DIR}/glm" "${CMAKE_SOURCE_DIR}")
 
 find_package(OpenGL REQUIRED)
 
