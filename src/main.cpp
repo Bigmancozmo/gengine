@@ -15,6 +15,10 @@
 
 #include "plugins/PluginLoader.hpp"
 
+#include <imgui/imgui.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
+
 using namespace gengine;
 
 bool hasArgument(int argc, char* argv[], const std::string& longForm, const std::string& shortForm) {
@@ -119,6 +123,19 @@ int main(int argc, char* argv[]) {
 	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
 
+	////////// ImGui //////////
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(window->get(), true);
+	ImGui_ImplOpenGL3_Init("#version 330 core");
+
+	////////// Plugins //////////
+
 	auto dlls = getDllFiles("plugins");
 
 	if (dlls.size() == 0) {
@@ -130,6 +147,8 @@ int main(int argc, char* argv[]) {
 		PluginHandle handle = PluginLoader::loadPlugin(dll.c_str());
 		loadedPlugins.push_back(handle);
 	}
+
+	////////// Main Loop //////////
 
 	while (!(window->shouldClose())) {
 		if (((float)glfwGetTime() - lastFPStime) >= 1) {
@@ -167,7 +186,19 @@ int main(int argc, char* argv[]) {
 		ebo->bind();
 		window->drawElements(GL_TRIANGLES, 18);
 
-		window->update();
+		
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("ImGui Window");
+		ImGui::Text("Minimal ImGui example");
+		ImGui::End();
+
+		ImGui::Render();
+
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 
 		if (useVSync) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -178,6 +209,8 @@ int main(int argc, char* argv[]) {
 		for (auto& handle : loadedPlugins) {
 			handle.plugin->update();
 		}
+
+		window->update();
 	}
 
 	for (auto& handle : loadedPlugins) {
