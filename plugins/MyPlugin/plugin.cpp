@@ -8,7 +8,7 @@ public:
     }
 
     void update() override {
-        logger->log(INFO, "tick");
+        
     }
 };
 
