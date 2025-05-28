@@ -11,7 +11,6 @@ set(PLUGIN_INCLUDE_DIRS
 )
 
 set(GENERIC_PLUGIN_SOURCES # all plugins will compile with these sources
-    "plugin_interface.h"
     "PluginLoader.cpp"
     "../src/classes/Logger.cpp"
 )

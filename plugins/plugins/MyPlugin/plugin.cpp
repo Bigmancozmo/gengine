@@ -1,4 +1,4 @@
-#include "plugin_interface.h"
+#include "Plugin.h"
 #include <iostream>
 
 class MyPlugin : public IPlugin {

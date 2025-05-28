@@ -1,5 +1,5 @@
-#ifndef PLUGIN_INTERFACE_H
-#define PLUGIN_INTERFACE_H
+#ifndef PLUGIN_H
+#define PLUGIN_H
 
 #ifdef BUILDING_PLUGIN_DLL
 #define PLUGIN_API __declspec(dllexport)
@@ -28,4 +28,4 @@ extern "C" {
 	PLUGIN_API void destroy_plugin(IPlugin*);
 }
 
-#endif // PLUGIN_INTERFACE_H
+#endif // PLUGIN_H

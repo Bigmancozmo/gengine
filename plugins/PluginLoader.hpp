@@ -1,7 +1,7 @@
 #ifndef PLUGIN_LOADER_HPP
 #define PLUGIN_LOADER_HPP
 
-#include "plugin_interface.h"
+#include "Plugin.h"
 #include <windows.h>
 #include <iostream>
 
