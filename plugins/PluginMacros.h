@@ -19,4 +19,4 @@ extern "C" {                                                  \
 
 #define PLUGIN public IPlugin
 
-#endif PLUGIN_MACROS_H
+#endif // PLUGIN_MACROS_H
