@@ -1,13 +1,10 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
-#ifdef BUILDING_PLUGIN_DLL
-#define PLUGIN_API __declspec(dllexport)
-#else
-#define PLUGIN_API __declspec(dllimport)
-#endif
+#include "PluginMacros.h"
 
 #include "../src/classes/Logger.hpp"
+#include "wrappers/PluginImGui.hpp"
 
 using namespace gengine;
 

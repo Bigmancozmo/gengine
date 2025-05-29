@@ -1,19 +1,10 @@
 #include "Plugin.h"
-#include <iostream>
 
-class MyPlugin : public IPlugin {
+class MyPlugin : PLUGIN {
 public:
     void run() override {
-        logger->log(SUCCESS, "the plugin haseth loaded successfully");
+        logger->log(SUCCESS, "MyPlugin custom start message");
     }
 };
 
-extern "C" {
-    IPlugin* create_plugin() {
-        return new MyPlugin();
-    }
-
-    void destroy_plugin(IPlugin* p) {
-        delete p;
-    }
-}
+DEFINE_PLUGIN(MyPlugin);
